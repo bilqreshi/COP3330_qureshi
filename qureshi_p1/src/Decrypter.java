@@ -3,7 +3,7 @@ public class Decrypter {
     public static String getval(String vals){
         int val = 0;
         val = Integer.parseInt(vals);
-        decrypt(val);
+        val = decrypt(val);
         vals = String.valueOf(val);
         return vals;
     }
@@ -16,12 +16,11 @@ public class Decrypter {
         c = val / 10 % 10;
         d = val % 10;
 
-        a = (a + 3) % 10;
+        a = ((a + 3) % 10)*10;
         b = (b + 3) % 10;
-        c = (c + 3) % 10;
-        d = (d + 3) % 10;
+        c = ((c + 3) % 10)*1000;
+        d = ((d + 3) % 10)*100;
 
-        System.out.println(c + d + a + b);
         return (c + d + a + b);
     }
 }

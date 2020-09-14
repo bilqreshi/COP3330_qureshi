@@ -16,12 +16,11 @@ public class Encrypter {
         c = val / 10 % 10;
         d = val % 10;
 
-        a = (a + 7) % 10;
+        a = ((a + 7) % 10)*10;
         b = (b + 7) % 10;
-        c = (c + 7) % 10;
-        d = (d + 7) % 10;
+        c = ((c + 7) % 10)*1000;
+        d = ((d + 7) % 10)*100;
 
-        System.out.println(c + d + a + b);
         return (c + d + a + b);
     }
 }

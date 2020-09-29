@@ -2,7 +2,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class App {
-    Scanner scanner = new Scanner(System.in);
+    static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         ArrayList<BodyMassIndex> bmiData = new ArrayList<BodyMassIndex>();
@@ -20,36 +20,51 @@ public class App {
         displayBmiStatistics(bmiData);
     }
 
-    private boolean moreInput() {
-        String input = "e";
-
-        while (!(input.equals("Y")) || !(input.equals("N"))) {
-            System.out.println("More input?\n'Y' for yes\n'N' for no");
-            input = scanner.next();
-            if (input.equals("Y")) {
-                return true;
+    private static boolean moreInput() {
+        char input = 'e';
+        boolean result = false;
+        while ((input != 'Y') && (input != 'N')) {
+            System.out.println("\nMore input?\n'Y' for yes\n'N' for no");
+            input = scanner.next().charAt(0);
+            if (input == 'Y') {
+                result = true;
             }
-            if (input.equals("N")) {
-                return false;
+            if (input == 'N') {
+                result = false;
             }
         }
+        return result;
     }
 
-    private double getUserHeight() {
-        System.out.print("Enter height: ");
-        double height = scanner.nextDouble();
+    private static double getUserHeight() {
+        double height = 0;
+        while (height <= 0) {
+            System.out.print("Enter height (greater than 0): ");
+            height = scanner.nextDouble();
+        }
         return height;
     }
 
-    private double getUserWeight() {
-        System.out.print("Enter weight: ");
-        double weight = scanner.nextDouble();
+    private static double getUserWeight() {
+        double weight = 0;
+        while (weight <= 0) {
+            System.out.print("Enter weight (greater than 0): ");
+            weight = scanner.nextDouble();
+        }
         return weight;
     }
 
-    private void displayBmiInfo() {
+    private static void displayBmiInfo(BodyMassIndex bmi) {
+        System.out.println("Body Mass Index Score: " + BodyMassIndex.BmiScore(bmi.height, bmi.weight));
+        System.out.println("Body Mass Index Category: " + BodyMassIndex.BmiCategory(BodyMassIndex.BmiScore(bmi.height, bmi.weight)));
     }
 
-    private void displayBmiStatistics() {
+    private static void displayBmiStatistics(ArrayList<BodyMassIndex> bmiData) {
+        double avg = 0, sum = 0;
+        for (int i = 0; i < bmiData.size(); i++) {
+            sum += BodyMassIndex.BmiScore(bmiData.get(i).height, bmiData.get(i).weight);
+        }
+        avg = sum / bmiData.size();
+        System.out.println("Average Body Mass Index Score: " + avg);
     }
 }

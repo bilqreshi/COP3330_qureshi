@@ -11,9 +11,9 @@ public class BodyMassIndex {
         }
     }
 
-    public static double BmiScore(double height, double weight) {
-        double bmi = 703 * (weight / (height * height));
-        return bmi;
+    public static double BmiScore(BodyMassIndex bmi) {
+        double score = 703 * (bmi.weight / (bmi.height * bmi.height));
+        return Math.round(score * 10d) / 10d;
     }
 
     public static String BmiCategory(double bmi) {
@@ -21,10 +21,10 @@ public class BodyMassIndex {
         if (bmi < 18.5) {
             result = "Underweight";
         }
-        if (bmi >= 18.5 || bmi <= 24.9) {
+        if (bmi >= 18.5 && bmi <= 24.9) {
             result = "Normal weight";
         }
-        if (bmi >= 25 || bmi <= 29.9) {
+        if (bmi >= 25 && bmi <= 29.9) {
             result = "Overweight";
         }
         if (bmi >= 30) {

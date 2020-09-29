@@ -55,14 +55,14 @@ public class App {
     }
 
     private static void displayBmiInfo(BodyMassIndex bmi) {
-        System.out.println("Body Mass Index Score: " + BodyMassIndex.BmiScore(bmi.height, bmi.weight));
-        System.out.println("Body Mass Index Category: " + BodyMassIndex.BmiCategory(BodyMassIndex.BmiScore(bmi.height, bmi.weight)));
+        System.out.println("Body Mass Index Score: " + BodyMassIndex.BmiScore(bmi));
+        System.out.println("Body Mass Index Category: " + BodyMassIndex.BmiCategory(BodyMassIndex.BmiScore(bmi)));
     }
 
     private static void displayBmiStatistics(ArrayList<BodyMassIndex> bmiData) {
         double avg = 0, sum = 0;
         for (int i = 0; i < bmiData.size(); i++) {
-            sum += BodyMassIndex.BmiScore(bmiData.get(i).height, bmiData.get(i).weight);
+            sum += BodyMassIndex.BmiScore(bmiData.get(i));
         }
         avg = sum / bmiData.size();
         System.out.println("Average Body Mass Index Score: " + avg);

@@ -60,13 +60,13 @@ public class TaskList{
         if(!(taskList.taskItems.isEmpty())){
             System.out.println();
             System.out.println("Current Tasks");
-            System.out.println("-------------\n");
+            System.out.println("-------------");
             for(int i = 0; i < taskList.taskItems.size(); i++){
                 System.out.print("\n" + i + ") ");
-                if(taskList.taskItems.get(i).complete = true){
-                    System.out.print("***");
+                if(taskList.taskItems.get(i).complete){
+                    System.out.print("*** ");
                 }
-                System.out.print(" [" + taskList.taskItems.get(i).date + "] " + taskList.taskItems.get(i).title + ": " + taskList.taskItems.get(i).description);
+                System.out.print("[" + taskList.taskItems.get(i).date + "] " + taskList.taskItems.get(i).title + ": " + taskList.taskItems.get(i).description);
             }
             System.out.println();
         }
@@ -76,59 +76,67 @@ public class TaskList{
     }
 
     public static void AddItem(TaskList taskList){
-        TaskItem taskItem = new TaskItem();
+        TaskItem taskItem = new TaskItem("0");
         taskItem.setComplete(false);
-        while(taskItem.title.isEmpty()){
+        do{
             System.out.print("\ntask title: ");
             taskItem.setTitle(scanner.next());
-        }
+        }while(taskItem.title.isEmpty());
         System.out.print("\ntask description: ");
         taskItem.setDescription(scanner.next());
-        while(taskItem.date.isEmpty()){
+        do{
             System.out.print("\ntask due date (YYYY-MM-DD): ");
             taskItem.setDate(scanner.next());
-        }
+        }while(taskItem.date == "0");
         taskList.taskItems.add(taskItem);
     }
 
     public static void EditItem(TaskList taskList){
-        View(taskList);
-        System.out.print("\n\nWhich task will you edit? ");
-        int opt = scanner.nextInt();
-        System.out.print("\nEnter a new title for task " + opt + ": ");
-        taskList.taskItems.get(opt).setTitle(scanner.next());
-        System.out.print("\nEnter a new description for task " + opt + ": ");
-        taskList.taskItems.get(opt).setDescription(scanner.next());
-        System.out.print("\nEnter a new due date for task " + opt + ": ");
-        taskList.taskItems.get(opt).setDate(scanner.next());
+        if(taskList.taskItems.isEmpty()){
+            System.out.println("no tasks");
+        }else{
+            View(taskList);
+            System.out.print("\n\nWhich task will you edit? ");
+            int opt = scanner.nextInt();
+            System.out.print("\nEnter a new title for task " + opt + ": ");
+            taskList.taskItems.get(opt).setTitle(scanner.next());
+            System.out.print("\nEnter a new description for task " + opt + ": ");
+            taskList.taskItems.get(opt).setDescription(scanner.next());
+            System.out.print("\nEnter a new due date for task " + opt + ": ");
+            taskList.taskItems.get(opt).setDate(scanner.next());
+        }
     }
 
     public static void RemoveItem(TaskList taskList){
-        View(taskList);
-        System.out.print("\n\nWhich task will you remove? ");
-        int opt = scanner.nextInt();
-        taskList.taskItems.remove(opt);
+        if(taskList.taskItems.isEmpty()){
+            System.out.println("no tasks");
+        }else{
+            View(taskList);
+            System.out.print("\n\nWhich task will you remove? ");
+            int opt = scanner.nextInt();
+            taskList.taskItems.remove(opt);
+        }
     }
 
     public static void CompleteItem(TaskList taskList){
         int c = 0;
         for(int i = 0; i < taskList.taskItems.size(); i++) {
-            if (taskList.taskItems.get(i).complete = false) {
+            if (!(taskList.taskItems.get(i).complete)) {
                 c++;
             }
             if(c > 0){
                 System.out.println();
                 System.out.println("Uncompleted Tasks");
-                System.out.println("-----------------\n");
+                System.out.println("-----------------");
                 for(i = 0; i < taskList.taskItems.size(); i++){
-                    if(taskList.taskItems.get(i).complete = false){
+                    if(!(taskList.taskItems.get(i).complete)){
                         System.out.print("\n" + i + ") ");
                         System.out.print(" [" + taskList.taskItems.get(i).date + "] " + taskList.taskItems.get(i).title + ": " + taskList.taskItems.get(i).description);
                     }
                 }
                 System.out.print("\n\nWhich task will you mark as completed? ");
                 int opt = scanner.nextInt();
-                taskList.taskItems.get(opt).complete = true;
+                taskList.taskItems.get(opt).setComplete(true);
             }else{
                 System.out.println("no tasks to complete");
             }
@@ -138,22 +146,22 @@ public class TaskList{
     public static void UncompleteItem(TaskList taskList){
         int c = 0;
         for(int i = 0; i < taskList.taskItems.size(); i++) {
-            if (taskList.taskItems.get(i).complete = true) {
+            if (taskList.taskItems.get(i).complete) {
                 c++;
             }
             if(c > 0){
                 System.out.println();
                 System.out.println("Completed Tasks");
-                System.out.println("---------------\n");
+                System.out.println("---------------");
                 for(i = 0; i < taskList.taskItems.size(); i++){
-                    if(taskList.taskItems.get(i).complete = false){
+                    if(taskList.taskItems.get(i).complete){
                         System.out.print("\n" + i + ") ");
                         System.out.print(" [" + taskList.taskItems.get(i).date + "] " + taskList.taskItems.get(i).title + ": " + taskList.taskItems.get(i).description);
                     }
                 }
                 System.out.print("\n\nWhich task will you unmark as completed? ");
                 int opt = scanner.nextInt();
-                taskList.taskItems.get(opt).complete = false;
+                taskList.taskItems.get(opt).setComplete(false);
             }else{
                 System.out.println("no tasks complete");
             }
@@ -166,7 +174,7 @@ public class TaskList{
         filename = scanner.next();
         try (Formatter output = new Formatter(filename + ".txt")) {
             for(int i = 0; i < taskList.taskItems.size(); i++){
-                output.format("%d/%s/%s/%s",taskList.taskItems.get(i).complete, taskList.taskItems.get(i).date, taskList.taskItems.get(i).title, taskList.taskItems.get(i).description);
+                output.format("%b_%s_%s_%s\n",taskList.taskItems.get(i).complete, taskList.taskItems.get(i).date, taskList.taskItems.get(i).title, taskList.taskItems.get(i).description);
             }
             System.out.println("task list has been saved");
         }catch(Exception e) {

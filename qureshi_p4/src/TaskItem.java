@@ -1,8 +1,12 @@
 public class TaskItem {
-    boolean complete = false;
+    boolean complete;
     String title;
     String description;
     String date;
+
+    public TaskItem(String date){
+        this.date = date;
+    }
 
     public void setComplete(boolean complete) {
         this.complete = complete;

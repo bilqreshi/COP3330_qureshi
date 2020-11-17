@@ -81,9 +81,9 @@ public class App {
                 TaskList taskList = new TaskList(name);
                 taskList.taskItems = new ArrayList<>();
                 Scanner input = new Scanner(Paths.get(name + ".txt"));
-                input.useDelimiter("/|\n");
+                input.useDelimiter("_|\n");
                 while (input.hasNext()) {
-                    TaskItem taskItem = new TaskItem();
+                    TaskItem taskItem = new TaskItem("0");
                     taskItem.setComplete(input.nextBoolean());
                     taskItem.setDate(input.next());
                     taskItem.setTitle(input.next());

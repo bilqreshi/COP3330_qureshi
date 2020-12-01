@@ -15,6 +15,8 @@ public class ContactItem {
         }
     }
 
+    public ContactItem(){}
+
     public void setFirst(String first) throws IllegalArgumentException {
         if(first.length() >= 1){
             this.first = first;

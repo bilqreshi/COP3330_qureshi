@@ -10,6 +10,8 @@ public class TaskItem {
         setDescription(description);
     }
 
+    public TaskItem(){}
+
     public void setDate(String date) throws IllegalArgumentException {
         if(date.matches("([0-9]{4})-([0-9]{2})-([0-9]{2})")){
             this.date = date;

@@ -5,7 +5,7 @@ public class ContactListTest {
 
     @Test
     void addingItemsIncreasesSize(){
-        ContactList contactList = new ContactList("name");
+        ContactList contactList = new ContactList();
         int size = contactList.contactItems.size();
         contactList.AddItem(new ContactItem("Davy", "Jones", "123-456-1234", "under@sea.org"));
         Assertions.assertEquals(size+1, contactList.contactItems.size());
@@ -13,21 +13,21 @@ public class ContactListTest {
 
     @Test
     void editingItemsFailsWithAllBlankValues(){
-        ContactList contactList = new ContactList("name");
+        ContactList contactList = new ContactList();
         contactList.AddItem(new ContactItem("Davy", "Jones", "123-456-1234", "under@sea.org"));
         Assertions.assertThrows(IllegalArgumentException.class, () -> contactList.Edit(0, "", "", "", ""));
     }
 
     @Test
     void editingItemsFailsWithInvalidIndex(){
-        ContactList contactList = new ContactList("name");
+        ContactList contactList = new ContactList();
         contactList.AddItem(new ContactItem("Davy", "Jones", "123-456-1234", "under@sea.org"));
         Assertions.assertThrows(IndexOutOfBoundsException.class, () -> contactList.Edit(2, "Javy", "Dones", "123-456-1235", "sea@under.org"));
     }
 
     @Test
     void editingSucceedsWithBlankFirstName(){
-        ContactList contactList = new ContactList("name");
+        ContactList contactList = new ContactList();
         contactList.AddItem(new ContactItem("Davy", "Jones", "123-456-1234", "under@sea.org"));
         contactList.Edit(0, "", "Dones", "123-456-1235", "sea@under.org");
         Assertions.assertEquals("Davy", contactList.contactItems.get(0).first);
@@ -38,7 +38,7 @@ public class ContactListTest {
 
     @Test
     void editingSucceedsWithBlankLastName(){
-        ContactList contactList = new ContactList("name");
+        ContactList contactList = new ContactList();
         contactList.AddItem(new ContactItem("Davy", "Jones", "123-456-1234", "under@sea.org"));
         contactList.Edit(0, "Javy", "", "123-456-1235", "sea@under.org");
         Assertions.assertEquals("Javy", contactList.contactItems.get(0).first);
@@ -49,7 +49,7 @@ public class ContactListTest {
 
     @Test
     void editingSucceedsWithBlankPhone(){
-        ContactList contactList = new ContactList("name");
+        ContactList contactList = new ContactList();
         contactList.AddItem(new ContactItem("Davy", "Jones", "123-456-1234", "under@sea.org"));
         contactList.Edit(0, "Javy", "Dones", "", "sea@under.org");
         Assertions.assertEquals("Javy", contactList.contactItems.get(0).first);
@@ -60,7 +60,7 @@ public class ContactListTest {
 
     @Test
     void editingSucceedsWithNonBlankValues(){
-        ContactList contactList = new ContactList("name");
+        ContactList contactList = new ContactList();
         contactList.AddItem(new ContactItem("Davy", "Jones", "123-456-1234", "under@sea.org"));
         contactList.Edit(0, "Javy", "Dones", "123-456-1235", "sea@under.org");
         Assertions.assertEquals("Javy", contactList.contactItems.get(0).first);
@@ -71,13 +71,13 @@ public class ContactListTest {
 
     @Test
     void newListIsEmpty(){
-        ContactList contactList = new ContactList("name");
+        ContactList contactList = new ContactList();
         Assertions.assertTrue(contactList.contactItems.isEmpty());
     }
 
     @Test
     void removingItemsDecreasesSize(){
-        ContactList contactList = new ContactList("name");
+        ContactList contactList = new ContactList();
         contactList.AddItem(new ContactItem("", "Jones", "123-456-1234", "under@sea.org"));
         int size = contactList.contactItems.size();
         contactList.RemoveItem(0);
@@ -86,14 +86,14 @@ public class ContactListTest {
 
     @Test
     void removingItemsFailsWithInvalidIndex(){
-        ContactList contactList = new ContactList("name");
+        ContactList contactList = new ContactList();
         contactList.AddItem(new ContactItem("", "Jones", "123-456-1234", "under@sea.org"));
         Assertions.assertThrows(IndexOutOfBoundsException.class, () -> contactList.RemoveItem(2));
     }
 
     @Test
     void savedContactListCanBeLoaded(){
-        ContactList contactList = new ContactList("save");
+        ContactList contactList = new ContactList();
         contactList.AddItem(new ContactItem("Davy", "Jones", "123-456-1234", "under@sea.org"));
         contactList.AddItem(new ContactItem("Javy", "Dones", "123-456-1235", "sea@under.org"));
         contactList.Save("test");

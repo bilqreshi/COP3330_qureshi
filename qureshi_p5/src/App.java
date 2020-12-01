@@ -4,9 +4,11 @@ import java.util.Scanner;
 public class App {
     static Scanner scanner = new Scanner(System.in);
 
-    public void main(String[] args){}
+    public static void main(String[] args){
+        Menu();
+    }
 
-    public void ShowMenu(){
+    public static void ShowMenu(){
         System.out.println();
         System.out.println("Select Your Application");
         System.out.println("-----------------------");
@@ -16,7 +18,7 @@ public class App {
         System.out.println("3) quit\n");
     }
 
-    public void Menu() throws IllegalArgumentException {
+    public static void Menu() throws IllegalArgumentException {
         int opt = 0;
         while (opt != 3){
             try{
@@ -30,10 +32,8 @@ public class App {
                 e.printStackTrace();
             }
             switch (opt) {
-                case 1 -> {
-                }
-                case 2 -> {
-                }
+                case 1 -> TaskApp.Menu();
+                case 2 -> ContactApp.Menu();
             }
         }
     }

@@ -7,11 +7,20 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class TaskList {
-    String name;
     ArrayList<TaskItem> taskItems = new ArrayList<>();
 
-    public TaskList(String name){
-        this.name = name;
+    public void View(){
+        System.out.println();
+        System.out.println("Current Tasks");
+        System.out.println("-------------");
+        for(int i = 0; i < this.taskItems.size(); i++){
+            System.out.print("\n" + i + ") ");
+            if(this.taskItems.get(i).complete){
+                System.out.print("*** ");
+            }
+            System.out.print("[" + this.taskItems.get(i).date + "] " + this.taskItems.get(i).title + ": " + this.taskItems.get(i).description);
+        }
+        System.out.println();
     }
 
     public void AddItem(TaskItem taskItem){
@@ -66,7 +75,7 @@ public class TaskList {
 
     public static TaskList Load(String name) {
         File file = new File(name + "tasks.txt");
-        TaskList taskList = new TaskList(name);
+        TaskList taskList = new TaskList();
         try{
             if(file.exists()){
                 Scanner input = new Scanner(Paths.get(name + "tasks.txt"));
@@ -80,6 +89,7 @@ public class TaskList {
                     taskList.AddItem(taskItem);
                 }
             }
+            System.out.println("task list has been loaded");
         } catch (IOException | NoSuchElementException | IllegalStateException e) {
             e.printStackTrace();
             System.out.println();

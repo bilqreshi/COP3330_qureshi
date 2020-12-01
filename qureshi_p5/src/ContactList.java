@@ -7,11 +7,16 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class ContactList {
-    String name;
     ArrayList<ContactItem> contactItems = new ArrayList<>();
 
-    public ContactList(String name){
-        this.name = name;
+    public void View(){
+        System.out.println();
+        System.out.println("Current Contacts");
+        System.out.println("----------------");
+        for(int i = 0; i < this.contactItems.size(); i++){
+            System.out.print("\n" + i + ") Name: " + this.contactItems.get(i).first + " " + this.contactItems.get(i).last + "\nPhone: " + this.contactItems.get(i).phone + "\n Email: " + this.contactItems.get(i).email);
+        }
+        System.out.println();
     }
 
     public void AddItem(ContactItem contactItem){
@@ -40,7 +45,7 @@ public class ContactList {
 
     public static ContactList Load(String name) {
         File file = new File(name + "contacts.txt");
-        ContactList contactList = new ContactList(name);
+        ContactList contactList = new ContactList();
         try{
             if(file.exists()){
                 Scanner input = new Scanner(Paths.get(name + "contacts.txt"));

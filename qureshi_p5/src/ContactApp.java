@@ -1,10 +1,11 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ContactApp {
     static Scanner scanner = new Scanner(System.in);
 
-    public void ShowMenu(){
+    public static void ShowMenu(){
         System.out.println();
         System.out.println("Main Menu");
         System.out.println("---------");
@@ -14,7 +15,7 @@ public class ContactApp {
         System.out.println("3) quit\n");
     }
 
-    public void Menu() throws IllegalArgumentException {
+    public static void Menu() throws IllegalArgumentException {
         int opt = 0;
         while (opt != 3){
             try{
@@ -29,14 +30,20 @@ public class ContactApp {
             }
             switch (opt) {
                 case 1 -> {
+                    ContactList contactList = new ContactList();
+                    System.out.println("new contact list has been created");
+                    Operations(contactList);
                 }
                 case 2 -> {
+                    System.out.println("Enter the filename to load: ");
+                    String name = scanner.next();
+                    Operations(ContactList.Load(name));
                 }
             }
         }
     }
 
-    public void ShowOperations(){
+    public static void ShowOperations(){
         System.out.println();
         System.out.println("List Operation Menu");
         System.out.println("-------------------");
@@ -49,7 +56,7 @@ public class ContactApp {
         System.out.println("6) quit to the main menu\n");
     }
 
-    public void Operations() throws IllegalArgumentException {
+    public static void Operations(ContactList contactList) throws IllegalArgumentException {
         int opt = 0;
         while (opt != 6){
             try{
@@ -63,16 +70,68 @@ public class ContactApp {
                 e.printStackTrace();
             }
             switch (opt) {
-                case 1 -> {
-                }
-                case 2 -> {
-                }
-                case 3 -> {
-                }
-                case 4 -> {
-                }
+                case 1 -> contactList.View();
+                case 2 -> Add(contactList);
+                case 3 -> Edit(contactList);
+                case 4 -> Remove(contactList);
                 case 5 -> {
+                    System.out.print("Enter the filename to save as: ");
+                    contactList.Save(scanner.next());
                 }
+            }
+        }
+    }
+
+    public static void Add(ContactList contactList){
+        ContactItem contactItem = new ContactItem();
+        System.out.print("\nFirst name: ");
+        contactItem.setFirst(scanner.next());
+        System.out.print("\nLast name: ");
+        contactItem.setLast(scanner.next());
+        System.out.print("\nPhone number (xxx-xxx-xxxx): ");
+        contactItem.setPhone(scanner.next());
+        System.out.print("\nEmail address (x@y.z): ");
+        contactItem.setEmail(scanner.next());
+        contactList.AddItem(contactItem);
+    }
+
+    public static void Edit(ContactList contactList){
+        if(contactList.contactItems.isEmpty()){
+            System.out.println("no contacts");
+        }else{
+            contactList.View();
+            try{
+                System.out.print("\n\nWhich contact will you edit? ");
+                int opt = scanner.nextInt();
+                System.out.print("\nEnter a new first name for contact " + opt + ": ");
+                contactList.contactItems.get(opt).setFirst(scanner.next());
+                System.out.print("\nEnter a new last name for contact " + opt + ": ");
+                contactList.contactItems.get(opt).setLast(scanner.next());
+                System.out.print("\nEnter a new phone number (xxx-xxx-xxxx) for contact " + opt + ": ");
+                contactList.contactItems.get(opt).setPhone(scanner.next());
+                System.out.print("\nEnter a new email address (x@y.z) for contact " + opt + ": ");
+                contactList.contactItems.get(opt).setEmail(scanner.next());
+            }catch (IllegalArgumentException illegalArgumentException) {
+                System.err.println("not a contact");
+            } catch (InputMismatchException inputMismatchException) {
+                System.err.println("input must be number");
+            }
+        }
+    }
+
+    public static void Remove(ContactList contactList){
+        if(contactList.contactItems.isEmpty()){
+            System.out.println("no contacts");
+        }else{
+            contactList.View();
+            try{
+                System.out.print("\n\nWhich contact will you remove? ");
+                int opt = scanner.nextInt();
+                contactList.RemoveItem(opt);
+            }catch (IllegalArgumentException illegalArgumentException) {
+                System.err.println("not a contact");
+            } catch (InputMismatchException inputMismatchException) {
+                System.err.println("input must be number");
             }
         }
     }

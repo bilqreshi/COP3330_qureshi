@@ -14,18 +14,19 @@ public class ContactApp {
         System.out.println("3) quit\n");
     }
 
-    public static void Menu() throws IllegalArgumentException {
+    public static void Menu() {
         int opt = 0;
         while (opt != 3){
             try{
                 ShowMenu();
                 opt = scanner.nextInt();
                 if(opt > 3 || opt < 1){
-                    throw new IllegalArgumentException("not a menu option");
+                    throw new IllegalArgumentException();
                 }
             } catch(InputMismatchException e){
                 System.err.println("input must be a digit");
-                e.printStackTrace();
+            } catch(IllegalArgumentException illegalArgumentException){
+                System.err.println("not a menu option");
             }
             switch (opt) {
                 case 1 -> {
@@ -55,18 +56,19 @@ public class ContactApp {
         System.out.println("6) quit to the main menu\n");
     }
 
-    public static void Operations(ContactList contactList) throws IllegalArgumentException {
+    public static void Operations(ContactList contactList) {
         int opt = 0;
         while (opt != 6){
             try{
                 ShowOperations();
                 opt = scanner.nextInt();
                 if(opt > 6 || opt < 1){
-                    throw new IllegalArgumentException("not a menu option");
+                    throw new IllegalArgumentException();
                 }
             } catch(InputMismatchException e){
                 System.err.println("input must be a digit");
-                e.printStackTrace();
+            } catch(IllegalArgumentException illegalArgumentException){
+                System.err.println("not a menu option");
             }
             switch (opt) {
                 case 1 -> contactList.View();

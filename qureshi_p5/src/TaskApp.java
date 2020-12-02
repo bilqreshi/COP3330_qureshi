@@ -14,18 +14,20 @@ public class TaskApp {
         System.out.println("3) quit\n");
     }
 
-    public static void Menu() throws IllegalArgumentException {
+    public static void Menu() {
         int opt = 0;
         while (opt != 3){
             try{
                 ShowMenu();
                 opt = scanner.nextInt();
                 if(opt > 3 || opt < 1){
-                    throw new IllegalArgumentException("not a menu option");
+                    throw new IllegalArgumentException();
                 }
             } catch(InputMismatchException e){
                 System.err.println("input must be a digit");
                 e.printStackTrace();
+            } catch(IllegalArgumentException illegalArgumentException){
+                System.err.println("not a menu option");
             }
             switch (opt) {
                 case 1 -> {
@@ -57,18 +59,20 @@ public class TaskApp {
         System.out.println("8) quit to the main menu\n");
     }
 
-    public static void Operations(TaskList taskList) throws IllegalArgumentException {
+    public static void Operations(TaskList taskList) {
         int opt = 0;
         while (opt != 8){
             try{
                 ShowOperations();
                 opt = scanner.nextInt();
                 if(opt > 8 || opt < 1){
-                    throw new IllegalArgumentException("not a menu option");
+                    throw new IllegalArgumentException();
                 }
             } catch(InputMismatchException e){
                 System.err.println("input must be a digit");
                 e.printStackTrace();
+            } catch(IllegalArgumentException illegalArgumentException){
+                System.err.println("not a menu option");
             }
             switch (opt) {
                 case 1 -> taskList.View();

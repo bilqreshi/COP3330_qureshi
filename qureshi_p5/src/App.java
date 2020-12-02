@@ -18,18 +18,19 @@ public class App {
         System.out.println("3) quit\n");
     }
 
-    public static void Menu() throws IllegalArgumentException {
+    public static void Menu() {
         int opt = 0;
         while (opt != 3){
             try{
                 ShowMenu();
                 opt = scanner.nextInt();
                 if(opt > 3 || opt < 1){
-                    throw new IllegalArgumentException("not a menu option");
+                    throw new IllegalArgumentException();
                 }
+            } catch(IllegalArgumentException illegalArgumentException){
+                System.err.println("not a menu option");
             } catch(InputMismatchException e){
                 System.err.println("input must be a digit");
-                e.printStackTrace();
             }
             switch (opt) {
                 case 1 -> TaskApp.Menu();

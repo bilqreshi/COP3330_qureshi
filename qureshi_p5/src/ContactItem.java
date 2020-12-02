@@ -15,7 +15,10 @@ public class ContactItem {
         }
     }
 
-    public ContactItem(){}
+    public ContactItem(String phone, String email){
+        this.phone = phone;
+        this.email = email;
+    }
 
     public void setFirst(String first) throws IllegalArgumentException {
         if(first.length() >= 1){
@@ -41,11 +44,35 @@ public class ContactItem {
         }
     }
 
+    public void setPhone1(String phone){
+        try{
+            if(phone.matches("([0-9]{3})-([0-9]{3})-([0-9]{4})")){
+                this.phone = phone;
+            }else{
+                throw new IllegalArgumentException();
+            }
+        }catch(IllegalArgumentException illegalArgumentException) {
+            System.err.println("must be format (xxx-xxx-xxxx)");
+        }
+    }
+
     public void setEmail(String email) throws IllegalArgumentException {
         if(email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")){
             this.email = email;
         } else {
             throw new IllegalArgumentException("must be format (x@y.z)");
+        }
+    }
+
+    public void setEmail1(String email){
+        try{
+            if(email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")){
+                this.email = email;
+            }else{
+                throw new IllegalArgumentException();
+            }
+        }catch(IllegalArgumentException illegalArgumentException) {
+            System.err.println("must be format (x@y.z)");
         }
     }
 

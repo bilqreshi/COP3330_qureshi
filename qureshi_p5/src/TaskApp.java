@@ -86,13 +86,15 @@ public class TaskApp {
     }
 
     public static void Add(TaskList taskList){
-        TaskItem taskItem = new TaskItem();
+        TaskItem taskItem = new TaskItem("0");
         System.out.print("\ntask title: ");
         taskItem.setTitle(scanner.next());
         System.out.print("\ntask description: ");
         taskItem.setDescription(scanner.next());
-        System.out.print("\ntask due date (YYYY-MM-DD): ");
-        taskItem.setDate(scanner.next());
+        do {
+            System.out.print("\ntask due date (YYYY-MM-DD): ");
+            taskItem.setDate1(scanner.next());
+        } while(taskItem.date == "0");
         taskList.AddItem(taskItem);
     }
 
@@ -101,19 +103,24 @@ public class TaskApp {
             System.out.println("no tasks");
         }else{
             taskList.View();
-            try{
+            int opt = 0;
+            try {
                 System.out.print("\n\nWhich task will you edit? ");
-                int opt = scanner.nextInt();
-                System.out.print("\nEnter a new title for task " + opt + ": ");
-                taskList.taskItems.get(opt).setTitle(scanner.next());
-                System.out.print("\nEnter a new description for task " + opt + ": ");
-                taskList.taskItems.get(opt).setDescription(scanner.next());
-                System.out.print("\nEnter a new due date for task " + opt + ": ");
-                taskList.taskItems.get(opt).setDate(scanner.next());
+                opt = scanner.nextInt();
             }catch (IllegalArgumentException illegalArgumentException) {
                 System.err.println("not a task");
             } catch (InputMismatchException inputMismatchException) {
                 System.err.println("input must be number");
+            }
+            try{
+                System.out.print("\nEnter a new title for task " + opt + ": ");
+                taskList.taskItems.get(opt).setTitle(scanner.next());
+                System.out.print("\nEnter a new description for task " + opt + ": ");
+                taskList.taskItems.get(opt).setDescription(scanner.next());
+                System.out.print("\nEnter a new due date for task " + opt + " (YYYY-MM-DD): ");
+                taskList.taskItems.get(opt).setDate(scanner.next());
+            }catch (IllegalArgumentException illegalArgumentException) {
+                System.err.println("must be format (YYYY-MM-DD)");
             }
         }
     }

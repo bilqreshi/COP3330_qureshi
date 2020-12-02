@@ -10,13 +10,27 @@ public class TaskItem {
         setDescription(description);
     }
 
-    public TaskItem(){}
+    public TaskItem(String date){
+        this.date = date;
+    }
 
     public void setDate(String date) throws IllegalArgumentException {
         if(date.matches("([0-9]{4})-([0-9]{2})-([0-9]{2})")){
             this.date = date;
         } else {
             throw new IllegalArgumentException("must be format (YYYY-MM-DD)");
+        }
+    }
+
+    public void setDate1(String date){
+        try{
+            if(date.matches("([0-9]{4})-([0-9]{2})-([0-9]{2})")){
+                this.date = date;
+            }else{
+                throw new IllegalArgumentException();
+            }
+        }catch(IllegalArgumentException illegalArgumentException) {
+            System.err.println("must be format (YYYY-MM-DD)");
         }
     }
 

@@ -58,6 +58,9 @@ public class ContactList {
                     contactItem.setEmail(input.next());
                     contactList.AddItem(contactItem);
                 }
+                System.out.println("contact list has been loaded");
+            } else {
+                System.out.println("file does not exist, new contact list has been created");
             }
         } catch (IOException | NoSuchElementException | IllegalStateException e) {
             e.printStackTrace();

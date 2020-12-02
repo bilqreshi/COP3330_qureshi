@@ -1,6 +1,5 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ContactApp {
     static Scanner scanner = new Scanner(System.in);
@@ -83,15 +82,19 @@ public class ContactApp {
     }
 
     public static void Add(ContactList contactList){
-        ContactItem contactItem = new ContactItem();
+        ContactItem contactItem = new ContactItem("0", "0");
         System.out.print("\nFirst name: ");
         contactItem.setFirst(scanner.next());
         System.out.print("\nLast name: ");
         contactItem.setLast(scanner.next());
-        System.out.print("\nPhone number (xxx-xxx-xxxx): ");
-        contactItem.setPhone(scanner.next());
-        System.out.print("\nEmail address (x@y.z): ");
-        contactItem.setEmail(scanner.next());
+        do{
+            System.out.print("\nPhone number (xxx-xxx-xxxx): ");
+            contactItem.setPhone1(scanner.next());
+        } while(contactItem.phone == "0");
+        do{
+            System.out.print("\nEmail address (x@y.z): ");
+            contactItem.setEmail1(scanner.next());
+        } while(contactItem.email == "0");
         contactList.AddItem(contactItem);
     }
 
@@ -100,9 +103,16 @@ public class ContactApp {
             System.out.println("no contacts");
         }else{
             contactList.View();
-            try{
+            int opt = 0;
+            try {
                 System.out.print("\n\nWhich contact will you edit? ");
-                int opt = scanner.nextInt();
+                opt = scanner.nextInt();
+            }catch (IllegalArgumentException illegalArgumentException) {
+                System.err.println("not a contact");
+            } catch (InputMismatchException inputMismatchException) {
+                System.err.println("input must be number");
+            }
+            try{
                 System.out.print("\nEnter a new first name for contact " + opt + ": ");
                 contactList.contactItems.get(opt).setFirst(scanner.next());
                 System.out.print("\nEnter a new last name for contact " + opt + ": ");
@@ -112,9 +122,7 @@ public class ContactApp {
                 System.out.print("\nEnter a new email address (x@y.z) for contact " + opt + ": ");
                 contactList.contactItems.get(opt).setEmail(scanner.next());
             }catch (IllegalArgumentException illegalArgumentException) {
-                System.err.println("not a contact");
-            } catch (InputMismatchException inputMismatchException) {
-                System.err.println("input must be number");
+                System.err.println("incorrect format");
             }
         }
     }

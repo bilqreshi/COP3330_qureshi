@@ -88,8 +88,10 @@ public class TaskList {
                     taskItem.setDescription(input.next());
                     taskList.AddItem(taskItem);
                 }
+                System.out.println("task list has been loaded");
+            } else {
+                System.out.println("file does not exist, new task list has been created");
             }
-            System.out.println("task list has been loaded");
         } catch (IOException | NoSuchElementException | IllegalStateException e) {
             e.printStackTrace();
             System.out.println();
